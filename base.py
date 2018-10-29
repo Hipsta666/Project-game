@@ -1,45 +1,49 @@
 from random import *
+from termcolor import *
 
-qws = None
-while qws != "нет":
+question = "да"
+while question == "да":
     empty_letters = list("АЕНОСТ")
     refresh = shuffle(empty_letters)
-    b = ''.join(empty_letters)
-    num_1 = num_2 = None
+    collection = ''.join(empty_letters)
 
+    # So the same letters do not fall out
+    num_1 = num_2 = None
     while num_1 == num_2:
         num_1 = randint(0, 5)
         num_2 = randint(0, 4)
 
-    # drop two random letters
-    word_m_sing = b.replace(b[num_1], "")
-    new_word = word_m_sing.replace(word_m_sing[num_2], "")
+    # Drop two random letters
+    word_letters = collection.replace(collection[num_1], "")
+    new_word = word_letters.replace(word_letters[num_2], "")
+    print("Отгадай слово из четырёх букв(А, Е, Н, О, С, Т)!")
 
-    print(new_word, num_1, num_2)
-    print("Отгадай слово из четырёх букв!")
-
-    my_word = None
-    c = None
-    qws = None
+    # Counting attempts and the number of correct letters
+    letters_place = None
     i = 0
-
-    while c != 4 and i != 10:
+    while letters_place != 4 and i != 10:
         i += 1
-        c = 0
-        print("Попытка №", i, ":", sep="", end="")
+        letters_place = 0
+        print("Попытка №{}:".format(i), sep="", end="")
         my_word = input()
 
+        # Create the ability to write in small letters
         for g in range(len(my_word)):
             if my_word[g].upper() == new_word[g]:
-                c += 1
-        print('На "своём месте":', c)
-        print('Не на "своём месте":', 4 - c)
+                letters_place += 1
+        print('На "своём месте":', letters_place)
+        print('Не на "своём месте":', 4 - letters_place)
 
-        if c == 4:
-            print("Правильно! Вы выиграли!")
+        if letters_place == 4:
+            print("Правильно! Вы выиграли!\n")
         if i == 10:
-            print("Извините, но вы проиграли.\n")
+            print("Извините, но вы проиграли.")
+            print("Было загадано слово {}.\n".format(new_word))
 
-    qws = input("Хотите сыграть ещё раз?(да/нет)")
-    if qws == "нет":
-        print("Спасибо за игру!")
+    # If the user enters the wrong answer
+    question = input("Хотите сыграть ещё раз?(да/нет)\n")
+    while question != "нет" and question != "да":
+        question = input("Хотите сыграть ещё раз?({}/{})\n".format(
+            colored("да", "blue"), colored("нет", "red")))
+        if question == "нет":
+            print("Спасибо за игру!")
