@@ -28,17 +28,23 @@ while question == "да":
         my_word = input()
 
         # Create the ability to write in small letters
-        for g in range(len(my_word)):
-            if my_word[g].upper() == new_word[g]:
-                letters_place += 1
-        print('На "своём месте":', letters_place)
-        print('Не на "своём месте":', 4 - letters_place)
+        if len(new_word) == len(my_word):
+            for g in range(len(my_word)):
+                if my_word[g].upper() == new_word[g]:
+                    letters_place += 1
+            print('На "своём месте":', letters_place)
+            print('Не на "своём месте":', 4 - letters_place)
 
-        if letters_place == 4:
-            print("Правильно! Вы выиграли!\n")
-        if i == 10:
-            print("Извините, но вы проиграли.")
-            print("Было загадано слово {}.\n".format(new_word))
+            if letters_place == 4:
+                print("Правильно! Вы выиграли!\n")
+            if i == 10:
+                print("Извините, но вы проиграли.")
+                print("Было загадано слово {}.\n".format(new_word))
+
+        if len(my_word) < len(new_word):
+            print("Не может быть загадано такое короткое слово.")
+        if len(my_word) > len(new_word):
+            print("Не может быть загадано такое длинное слово.")
 
     # If the user enters the wrong answer
     question = input("Хотите сыграть ещё раз?(да/нет)\n")
